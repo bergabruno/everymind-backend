@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://lucasaroucha:H7x9Jk5Uo3Bn8Zr0Tg1Yq2Xs6Vw4Le@cluster0.cukr2.mongodb.net/JobFancy
+
+server:
+  servlet:
+    contextPath: "/mnt_job_vacancies/v1"
