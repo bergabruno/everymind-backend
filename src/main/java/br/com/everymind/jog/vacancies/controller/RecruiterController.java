@@ -1,6 +1,7 @@
 package br.com.everymind.jog.vacancies.controller;
 
 import br.com.everymind.jog.vacancies.model.dto.RecruiterDTO;
+import br.com.everymind.jog.vacancies.model.dto.VacancyDTO;
 import br.com.everymind.jog.vacancies.model.dto.WorkExperienceDTO;
 import br.com.everymind.jog.vacancies.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,16 @@ public class RecruiterController {
     public ResponseEntity<List<WorkExperienceDTO>> getWorkExperience(@PathVariable String recruiterId) {
         return new ResponseEntity<>(recruiterService.getAllWorkExperiences(recruiterId), HttpStatus.OK);
     }
+
+    @PostMapping("/{recruiterId}/vacancy")
+    public ResponseEntity<Void> appendVacancy(@PathVariable String recruiterId, @RequestBody VacancyDTO vacancyDTO) {
+        recruiterService.appendVacancy(recruiterId, vacancyDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{recruiterId}/vacancy")
+    public ResponseEntity<List<VacancyDTO>> getVacancys(@PathVariable String recruiterId) {
+        return new ResponseEntity<>(recruiterService.getAllVacancy(recruiterId), HttpStatus.OK);
+    }
+
 }

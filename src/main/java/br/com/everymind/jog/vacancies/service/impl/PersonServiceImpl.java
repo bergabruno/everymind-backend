@@ -3,6 +3,7 @@ package br.com.everymind.jog.vacancies.service.impl;
 import br.com.everymind.jog.vacancies.model.dto.*;
 import br.com.everymind.jog.vacancies.repository.PersonRepository;
 
+import br.com.everymind.jog.vacancies.repository.VacancyRepository;
 import br.com.everymind.jog.vacancies.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private VacancyRepository vacancyRepository;
+
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -111,6 +116,26 @@ public class PersonServiceImpl implements PersonService {
         }
 
         return mongoTemplate.find(query, PersonDTO.class);
+    }
+
+    @Override
+    public void appendVacancy(String personId, String vacancyId) {
+        VacancyDTO vacancyDTO = vacancyRepository.findById(vacancyId).orElseThrow(() -> new RuntimeException("Não foi encontrado ninguem com este ID: " + vacancyId));;
+
+        PersonDTO personDTO = getById(personId);
+
+        personDTO.appendVacancy(vacancyDTO);
+        vacancyDTO.appendPerson(personDTO);
+
+        save(personDTO);
+        vacancyRepository.save(vacancyDTO);
+    }
+
+    @Override
+    public List<VacancyDTO> getAllVacancys(String personId) {
+        PersonDTO personDTO = getById(personId);
+
+        return vacancyRepository.findAllById(personDTO.getVacancyIds());
     }
 
 }

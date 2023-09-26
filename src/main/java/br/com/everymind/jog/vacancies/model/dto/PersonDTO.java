@@ -33,6 +33,7 @@ public class PersonDTO {
     private List<CoursesDTO> coursesDTOS;
     private List<DegreeDTO> degreeDTOS;
     private List<WorkExperienceDTO> workExperienceDTOS;
+    private List<String> vacancyIds;
 
     public void appendSkill(SkillsDTO skillsDTO) {
         if (this.skillsDTOS == null)
@@ -60,5 +61,12 @@ public class PersonDTO {
             this.workExperienceDTOS = new ArrayList<>();
 
         workExperienceDTOS.add(workExperienceDTO);
+    }
+
+    public void appendVacancy(VacancyDTO vacancyDTO) {
+        if (this.vacancyIds == null)
+            this.vacancyIds = new ArrayList<>();
+
+        vacancyIds.add(vacancyDTO.getId());
     }
 }

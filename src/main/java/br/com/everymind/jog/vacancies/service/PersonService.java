@@ -31,4 +31,9 @@ public interface PersonService {
     void appendSocialVulnerability(String personId, String socialVulnerability);
 
     List<PersonDTO> findByParameters(Integer age, String city, String socialVulnerability);
+
+
+    void appendVacancy(String personId, String vacancyId);
+
+    List<VacancyDTO> getAllVacancys(String personId);
 }

@@ -22,11 +22,19 @@ public class RecruiterDTO {
     @JsonIgnore
     private String password;
     private List<WorkExperienceDTO> workExperienceDTOS;
+    private List<VacancyDTO> vacancyDTOS;
 
     public void appendWorkExperience(WorkExperienceDTO workExperienceDTO) {
         if (this.workExperienceDTOS == null)
             this.workExperienceDTOS = new ArrayList<>();
 
         workExperienceDTOS.add(workExperienceDTO);
+    }
+
+    public void appendVacancy(VacancyDTO vacancyDTO) {
+        if (this.vacancyDTOS == null)
+            this.vacancyDTOS = new ArrayList<>();
+
+        vacancyDTOS.add(vacancyDTO);
     }
 }

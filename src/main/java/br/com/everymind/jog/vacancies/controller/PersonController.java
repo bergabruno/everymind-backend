@@ -84,6 +84,19 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @GetMapping("/{personId}/vacancy")
+    public ResponseEntity<List<VacancyDTO>> getVacancys(@PathVariable String personId) {
+        return new ResponseEntity<>(personService.getAllVacancys(personId), HttpStatus.OK);
+    }
+
+    @PostMapping("/{personId}/vacancy")
+    public ResponseEntity<Void> appendVacancy(@RequestParam String vacancyId, @PathVariable String personId) {
+        personService.appendVacancy(personId, vacancyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @GetMapping("/find")
     public ResponseEntity<List<PersonDTO>> findByParameters(@RequestParam(required = false) Integer age,
                                         @RequestParam(required = false) String city,
