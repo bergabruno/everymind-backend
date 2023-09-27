@@ -11,4 +11,5 @@ public interface VacancyService {
     List<VacancyDTO> getAll();
     List<PersonDTO> getAllByVacancy(String vacancyId);
 
+    VacancyDTO getById(String vacancyId);
 }

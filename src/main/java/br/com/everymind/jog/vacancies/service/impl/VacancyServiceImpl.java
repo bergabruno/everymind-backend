@@ -30,4 +30,9 @@ public class VacancyServiceImpl implements VacancyService {
 
         return personRepository.findAllById(vacancyDTO.getPersonIds());
     }
+
+    @Override
+    public VacancyDTO getById(String vacancyId) {
+        return vacancyRepository.findById(vacancyId).orElseThrow();
+    }
 }

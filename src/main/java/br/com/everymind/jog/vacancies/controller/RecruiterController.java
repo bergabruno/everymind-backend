@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recruiter")
+@CrossOrigin(origins = "http://localhost:5500")
 public class RecruiterController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class RecruiterController {
     @PostMapping("/{recruiterId}/work-experience")
     public ResponseEntity<Void> appendWorkExperience(@PathVariable String recruiterId, @RequestBody WorkExperienceDTO experienceDTO) {
         recruiterService.appendWorkExperience(recruiterId, experienceDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{recruiterId}/work-experience")

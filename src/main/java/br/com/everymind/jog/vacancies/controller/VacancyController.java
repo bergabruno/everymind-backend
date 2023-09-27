@@ -7,15 +7,13 @@ import br.com.everymind.jog.vacancies.service.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/vacancy")
+@CrossOrigin(origins = "http://localhost:5500")
 public class VacancyController {
 
     @Autowired
@@ -27,8 +25,13 @@ public class VacancyController {
     }
 
 
-    @GetMapping("/{vacancyId}")
+    @GetMapping("/{vacancyId}/persons")
     public ResponseEntity<List<PersonDTO>> getPersonByVacancy(@PathVariable String vacancyId) {
         return new ResponseEntity<>(vacancyService.getAllByVacancy(vacancyId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{vacancyId}")
+    public ResponseEntity<VacancyDTO> getVacancyDetails(@PathVariable String vacancyId) {
+        return new ResponseEntity<>(vacancyService.getById(vacancyId), HttpStatus.OK);
     }
 }
