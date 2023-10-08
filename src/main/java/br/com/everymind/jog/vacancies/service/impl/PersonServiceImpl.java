@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -30,7 +31,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDTO save(PersonDTO personDTO) {
-        return personRepository.save(personDTO);
+        personDTO.setPasswordEncrypted(Base64.getEncoder().encodeToString(personDTO.getPassword().getBytes()));
+        personDTO.setPassword(null);
+        personDTO = personRepository.save(personDTO);
+        personDTO.setPasswordEncrypted(null);
+        return  personDTO;
     }
 
     @Override

@@ -24,7 +24,6 @@ public class VacancyController {
         return new ResponseEntity<>(vacancyService.getAll(), HttpStatus.OK);
     }
 
-
     @GetMapping("/{vacancyId}/persons")
     public ResponseEntity<List<PersonDTO>> getPersonByVacancy(@PathVariable String vacancyId) {
         return new ResponseEntity<>(vacancyService.getAllByVacancy(vacancyId), HttpStatus.OK);

@@ -1,6 +1,8 @@
 package br.com.everymind.jog.vacancies.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -21,8 +23,8 @@ public class PersonDTO {
     private String photo;
     private String name;
     private String email;
-    @JsonIgnore
     private String password;
+    private String passwordEncrypted;
     private String phoneNumber;
     private String about;
     private String city;

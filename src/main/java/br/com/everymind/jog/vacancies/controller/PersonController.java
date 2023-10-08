@@ -29,6 +29,11 @@ public class PersonController {
         return new ResponseEntity<>(personService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{personId}")
+    public ResponseEntity<PersonDTO> getById(@PathVariable String personId) {
+        return new ResponseEntity<>(personService.getById(personId), HttpStatus.OK);
+    }
+
     //Courses
     @PostMapping("/{personId}/course")
     public ResponseEntity<Void> appendCourse(@PathVariable String personId, @RequestBody CoursesDTO coursesDTO) {
