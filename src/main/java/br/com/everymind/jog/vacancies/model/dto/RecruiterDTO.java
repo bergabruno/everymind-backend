@@ -19,10 +19,17 @@ public class RecruiterDTO {
     @Id
     private String id;
     private String email;
-    @JsonIgnore
     private String password;
-    private List<WorkExperienceDTO> workExperienceDTOS;
-    private List<VacancyDTO> vacancyDTOS;
+    private String passwordEncrypted;
+    private String name;
+    private String phoneNumber;
+    private String about;
+    private String city;
+    private String state;
+    private Integer age;
+    private Integer vagasDivulgadas;
+    private List<WorkExperienceDTO> workExperienceDTOS = new ArrayList<>();
+    private List<VacancyDTO> vacancyDTOS = new ArrayList<>();
 
     public void appendWorkExperience(WorkExperienceDTO workExperienceDTO) {
         if (this.workExperienceDTOS == null)

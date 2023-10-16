@@ -31,17 +31,52 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDTO save(PersonDTO personDTO) {
-        personDTO.setPasswordEncrypted(Base64.getEncoder().encodeToString(personDTO.getPassword().getBytes()));
-        personDTO.setPassword(null);
+        if(personDTO.getPasswordEncrypted() == null) {
+            personDTO.setPasswordEncrypted(Base64.getEncoder().encodeToString(personDTO.getPassword().getBytes()));
+            personDTO.setPassword(null);
+        }
         personDTO = personRepository.save(personDTO);
-        personDTO.setPasswordEncrypted(null);
         return  personDTO;
     }
 
     @Override
+    public PersonDTO savePersonalInfo(PersonDTO personDTO, String id) {
+        PersonDTO personDTO1 = getById(id);
+
+        personDTO1.setName(personDTO.getName());
+        personDTO1.setPhoneNumber(personDTO.getPhoneNumber());
+        personDTO1.setCity(personDTO.getCity());
+        personDTO1.setState(personDTO.getState());
+        personDTO1.setAge(personDTO.getAge());
+        personDTO1.setAbout(personDTO.getAbout());
+
+        save(personDTO1);
+
+        return personDTO1;
+    }
+
+    @Override
     public PersonDTO getById(String id) {
-        return personRepository.findById(id)
+        PersonDTO personDTO =  personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Não foi encontrado ninguem com este ID: " + id));
+
+        personDTO.setAppliedJobsCount(personDTO.getVacancyIds().size());
+
+        return personDTO;
+    }
+
+    @Override
+    public PersonDTO login(PersonDTO personDTO) {
+        PersonDTO personDTO1 = personRepository.findByEmail(personDTO.getEmail());
+
+        byte[] decodedBytes = Base64.getDecoder().decode(personDTO1.getPasswordEncrypted());
+        String decodedPassword = new String(decodedBytes);
+
+        if(decodedPassword.equals(personDTO.getPassword())){
+            return personDTO1;
+        }
+
+        throw  new RuntimeException("Senha errada");
     }
 
     @Override

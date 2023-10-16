@@ -1,5 +1,6 @@
 package br.com.everymind.jog.vacancies.controller;
 
+import br.com.everymind.jog.vacancies.model.dto.PersonDTO;
 import br.com.everymind.jog.vacancies.model.dto.RecruiterDTO;
 import br.com.everymind.jog.vacancies.model.dto.VacancyDTO;
 import br.com.everymind.jog.vacancies.model.dto.WorkExperienceDTO;
@@ -20,17 +21,20 @@ public class RecruiterController {
     @Autowired
     private RecruiterService recruiterService;
 
-
     @PostMapping
     public ResponseEntity<RecruiterDTO> save(@RequestBody @Validated RecruiterDTO recruiterDTO) {
         return new ResponseEntity<>(recruiterService.save(recruiterDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/{recruiterId}/append-info")
+    public ResponseEntity<RecruiterDTO> appendInfo(@PathVariable String recruiterId, @RequestBody @Validated RecruiterDTO recruiterDTO) {
+        return new ResponseEntity<>(recruiterService.savePersonalInfo(recruiterDTO, recruiterId), HttpStatus.OK);
     }
 
     @GetMapping("/{recruiterId}")
     public ResponseEntity<RecruiterDTO> getById(@PathVariable String recruiterId) {
         return new ResponseEntity<>(recruiterService.getById(recruiterId), HttpStatus.OK);
     }
-
 
     @PostMapping("/{recruiterId}/work-experience")
     public ResponseEntity<Void> appendWorkExperience(@PathVariable String recruiterId, @RequestBody WorkExperienceDTO experienceDTO) {

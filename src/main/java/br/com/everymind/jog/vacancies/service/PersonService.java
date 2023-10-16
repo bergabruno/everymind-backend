@@ -7,8 +7,11 @@ import java.util.List;
 public interface PersonService {
 
     PersonDTO save(PersonDTO personDTO);
+    PersonDTO savePersonalInfo(PersonDTO personDTO, String id);
 
     PersonDTO getById(String id);
+
+    PersonDTO login(PersonDTO personDTO);
 
     List<PersonDTO> getAll();
 

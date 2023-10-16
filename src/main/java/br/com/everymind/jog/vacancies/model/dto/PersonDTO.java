@@ -31,11 +31,12 @@ public class PersonDTO {
     private String state;
     private String socialVulnerability;
     private Integer age;
-    private List<SkillsDTO> skillsDTOS;
-    private List<CoursesDTO> coursesDTOS;
-    private List<DegreeDTO> degreeDTOS;
-    private List<WorkExperienceDTO> workExperienceDTOS;
-    private List<String> vacancyIds;
+    private Integer appliedJobsCount;
+    private List<SkillsDTO> skillsDTOS = new ArrayList<>();
+    private List<CoursesDTO> coursesDTOS = new ArrayList<>();
+    private List<DegreeDTO> degreeDTOS = new ArrayList<>();
+    private List<WorkExperienceDTO> workExperienceDTOS = new ArrayList<>();
+    private List<String> vacancyIds = new ArrayList<>();
 
     public void appendSkill(SkillsDTO skillsDTO) {
         if (this.skillsDTOS == null)

@@ -10,6 +10,8 @@ public interface RecruiterService {
 
     RecruiterDTO save(RecruiterDTO recruiterDTO);
 
+    RecruiterDTO savePersonalInfo(RecruiterDTO recruiterDTO, String id);
+
     RecruiterDTO getById(String id);
 
     void appendWorkExperience(String recruiterId, WorkExperienceDTO workExperienceDTO);

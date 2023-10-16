@@ -1,5 +1,6 @@
 package br.com.everymind.jog.vacancies.service.impl;
 
+import br.com.everymind.jog.vacancies.model.dto.PersonDTO;
 import br.com.everymind.jog.vacancies.model.dto.RecruiterDTO;
 import br.com.everymind.jog.vacancies.model.dto.VacancyDTO;
 import br.com.everymind.jog.vacancies.model.dto.WorkExperienceDTO;
@@ -9,6 +10,7 @@ import br.com.everymind.jog.vacancies.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -23,13 +25,38 @@ public class RecruiterServiceImpl implements RecruiterService {
 
     @Override
     public RecruiterDTO save(RecruiterDTO recruiterDTO) {
-        return recruiterRepository.save(recruiterDTO);
+        if(recruiterDTO.getPasswordEncrypted() == null) {
+            recruiterDTO.setPasswordEncrypted(Base64.getEncoder().encodeToString(recruiterDTO.getPassword().getBytes()));
+            recruiterDTO.setPassword(null);
+        }
+        recruiterDTO = recruiterRepository.save(recruiterDTO);
+        return  recruiterDTO;
+    }
+
+    @Override
+    public RecruiterDTO savePersonalInfo(RecruiterDTO recruiterDTO, String id) {
+        RecruiterDTO recruiterDTO1 = getById(id);
+
+        recruiterDTO1.setName(recruiterDTO.getName());
+        recruiterDTO1.setPhoneNumber(recruiterDTO.getPhoneNumber());
+        recruiterDTO1.setCity(recruiterDTO.getCity());
+        recruiterDTO1.setState(recruiterDTO.getState());
+        recruiterDTO1.setAge(recruiterDTO.getAge());
+        recruiterDTO1.setAbout(recruiterDTO.getAbout());
+
+        save(recruiterDTO1);
+
+        return recruiterDTO1;
     }
 
     @Override
     public RecruiterDTO getById(String id) {
-        return recruiterRepository.findById(id)
+        RecruiterDTO recruiterDTO =  recruiterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Não foi encontrado ninguem com este ID: " + id));
+
+        recruiterDTO.setVagasDivulgadas(recruiterDTO.getVacancyDTOS().size());
+
+        return recruiterDTO;
     }
 
     @Override

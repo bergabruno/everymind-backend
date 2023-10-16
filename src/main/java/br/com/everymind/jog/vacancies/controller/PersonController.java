@@ -24,6 +24,11 @@ public class PersonController {
         return new ResponseEntity<>(personService.save(personDTO), HttpStatus.OK);
     }
 
+    @PostMapping("/{personId}/append-info")
+    public ResponseEntity<PersonDTO> appendInfo(@PathVariable String personId, @RequestBody @Validated PersonDTO personDTO) {
+        return new ResponseEntity<>(personService.savePersonalInfo(personDTO, personId), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<PersonDTO>> getAll() {
         return new ResponseEntity<>(personService.getAll(), HttpStatus.OK);
@@ -108,5 +113,10 @@ public class PersonController {
                                         @RequestParam(required = false) String city,
                                         @RequestParam(required = false) String socialVulnerability) {
         return new ResponseEntity<>(personService.findByParameters(age, city, socialVulnerability), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<PersonDTO> login(@RequestBody @Validated PersonDTO personDTO) {
+        return new ResponseEntity<>(personService.login(personDTO), HttpStatus.OK);
     }
 }
