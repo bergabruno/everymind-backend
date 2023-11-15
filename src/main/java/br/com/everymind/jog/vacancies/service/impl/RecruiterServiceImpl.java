@@ -85,4 +85,23 @@ public class RecruiterServiceImpl implements RecruiterService {
     public List<VacancyDTO> getAllVacancy(String recruiterId) {
         return getById(recruiterId).getVacancyDTOS();
     }
+
+    @Override
+    public RecruiterDTO login(RecruiterDTO recruiterDTO) {
+        RecruiterDTO recruiterDTO1 = recruiterRepository.findByEmail(recruiterDTO.getEmail());
+
+        if(recruiterDTO1 == null){
+            throw  new RuntimeException("Email incorreto");
+        }
+
+
+        byte[] decodedBytes = Base64.getDecoder().decode(recruiterDTO1.getPasswordEncrypted());
+        String decodedPassword = new String(decodedBytes);
+
+        if(decodedPassword.equals(recruiterDTO.getPassword())){
+            return recruiterDTO1;
+        }
+
+        throw  new RuntimeException("Senha errada");
+    }
 }

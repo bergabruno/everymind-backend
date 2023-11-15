@@ -21,11 +21,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
-
     @Autowired
     private VacancyRepository vacancyRepository;
-
-
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -140,22 +137,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<PersonDTO> findByParameters(Integer age, String city, String socialVulnerability) {
-        Query query = new Query();
+    public List<PersonDTO> findByParameters(String searchText) {
 
-        if (age != null) {
-            query.addCriteria(Criteria.where("age").is(age));
-        }
-
-        if (city != null) {
-            query.addCriteria(Criteria.where("city").is(city));
-        }
-
-        if (socialVulnerability != null) {
-            query.addCriteria(Criteria.where("socialVulnerability").is(socialVulnerability));
-        }
-
-        return mongoTemplate.find(query, PersonDTO.class);
+        return personRepository.search(searchText);
     }
 
     @Override

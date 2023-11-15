@@ -33,7 +33,7 @@ public interface PersonService {
 
     void appendSocialVulnerability(String personId, String socialVulnerability);
 
-    List<PersonDTO> findByParameters(Integer age, String city, String socialVulnerability);
+    List<PersonDTO> findByParameters(String searchText);
 
 
     void appendVacancy(String personId, String vacancyId);

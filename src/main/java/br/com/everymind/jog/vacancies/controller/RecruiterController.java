@@ -58,4 +58,9 @@ public class RecruiterController {
         return new ResponseEntity<>(recruiterService.getAllVacancy(recruiterId), HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<RecruiterDTO> login(@RequestBody @Validated RecruiterDTO recruiterDTO) {
+        return new ResponseEntity<>(recruiterService.login(recruiterDTO), HttpStatus.OK);
+    }
+
 }

@@ -109,10 +109,8 @@ public class PersonController {
 
 
     @GetMapping("/find")
-    public ResponseEntity<List<PersonDTO>> findByParameters(@RequestParam(required = false) Integer age,
-                                        @RequestParam(required = false) String city,
-                                        @RequestParam(required = false) String socialVulnerability) {
-        return new ResponseEntity<>(personService.findByParameters(age, city, socialVulnerability), HttpStatus.OK);
+    public ResponseEntity<List<PersonDTO>> findByParameters(@RequestParam(required = false) String searchText) {
+        return new ResponseEntity<>(personService.findByParameters(searchText), HttpStatus.OK);
     }
 
     @PostMapping("/login")
